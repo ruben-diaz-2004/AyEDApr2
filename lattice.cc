@@ -28,7 +28,6 @@ Lattice::Lattice(int size_x, int size_y, std::string& border) {
   for (int i{0}; i < size_y; ++i) {
     lattice_[i].resize(size_x);
     for (int j{0}; j < size_x; ++j) {
-      lattice_[i].push_back(new Cell(Position(j, i), 0));
       lattice_[i][j] = new Cell(Position(j, i), 0);
     }
   }

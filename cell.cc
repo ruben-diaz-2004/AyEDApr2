@@ -48,9 +48,39 @@ void Cell::SetState(char state) {
  * @param lattice Reticulo de células
 */
 void Cell::NextState(Lattice& reticulo) {
-  const int C = state_;
-  int next_state{1};
+  int alive_count{0};
+  int next_state{0};
 
+  const int C = state_;
+  if (C == 1) alive_count++;
+  int E = reticulo.GetCell(Position(position_.first-1, position_.second)).GetState();
+  if (E == 1) alive_count++;
+  int W = reticulo.GetCell(Position(position_.first+1, position_.second)).GetState();
+  if (W == 1) alive_count++;
+  int N = reticulo.GetCell(Position(position_.first, position_.second-1)).GetState();
+  if (N == 1) alive_count++;
+  int S = reticulo.GetCell(Position(position_.first, position_.second+1)).GetState();
+  if (S == 1) alive_count++;
+  int NE = reticulo.GetCell(Position(position_.first-1, position_.second-1)).GetState();
+  if (NE == 1) alive_count++;
+  int NW = reticulo.GetCell(Position(position_.first+1, position_.second-1)).GetState();
+  if (NW == 1) alive_count++;
+  int SE = reticulo.GetCell(Position(position_.first-1, position_.second+1)).GetState();
+  if (SE == 1) alive_count++;
+  int SW = reticulo.GetCell(Position(position_.first+1, position_.second+1)).GetState();
+  if (SW == 1) alive_count++;
+
+  if (C == 0) {
+    if (alive_count == 3) {
+      next_state = 1;
+    }
+  } else {
+    if (alive_count < 2 || alive_count > 3) {
+      next_state = 0;
+    } else {
+      next_state = 1;
+    }
+  }
   // int L = reticulo.GetCell(position_ - 1).GetState();
   // int R = reticulo.GetCell(position_ + 1).GetState();  
 
@@ -75,7 +105,7 @@ void Cell::UpdateState() {
 */
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
   if (cell.state_ == 0) {
-    os << " ";
+    os << "-";
   } else {
     os << "X";
   }
