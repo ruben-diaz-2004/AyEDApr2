@@ -22,7 +22,7 @@
  * @param size Tamaño del retículo
  * @param border Tipo de borde
  */
-Lattice::Lattice(int size_x, int size_y, std::string& border) {
+Lattice::Lattice(int size_x, int size_y) {
   lattice_.resize(size_y);
 
   for (int i{0}; i < size_y; ++i) {
@@ -30,16 +30,6 @@ Lattice::Lattice(int size_x, int size_y, std::string& border) {
     for (int j{0}; j < size_x; ++j) {
       lattice_[i][j] = new Cell(Position(j, i), 0);
     }
-  }
-
-  if (border == "open") {
-    border_ = 0;
-  }
-  else if (border == "periodic") {
-    border_ = 1;
-  }
-  else {
-    std::cerr << "Error: border no válido" << std::endl;
   }
 }
 
@@ -56,36 +46,12 @@ Lattice::~Lattice() {
   lattice_.clear();
 }
 
-/**
- * Devuelve la célula en la posición indicada
- * @param position Posición de la célula
- * @return Célula en la posición indicada
- */
-Cell& Lattice::GetCell(const Position& position) const {
 
-  switch (border_) {
-  case 0: // Open border
-    if (position.first < 0 || position.second < 0 || position.first > lattice_[0].size()-1 || position.second > lattice_.size()-1) {
-      if (open_type_ == 0) {
-        Cell* cell = new Cell(Position(-100,-100), 1);
-        return *cell;
-      } else if (open_type_ == 1) {
-        Cell* cell = new Cell(Position(-100,-100), 0);
-        return *cell;
-      }
-    } else return *lattice_[position.second][position.first];
-    break;
-  // case 1:
-  //   if (position < 0) {
-  //     return *lattice_[lattice_.size()-1];
-  //   } else if (position > lattice_.size()-1) {
-  //       return *lattice_[0];
-  //     } else return *lattice_[position];
-  //   break;
-  default:
-    break;
-  }
+
+Cell& Lattice::GetCell(const Position& position) const {
+  return *lattice_[position.second][position.first];
 }
+
 
 
 /**
@@ -104,15 +70,6 @@ void Lattice::NextGeneration() {
       lattice_[i][j]->UpdateState();
     }
   }
-}
-
-
-/**
- * Establece el tipo de borde abierto
- * @param open_type Tipo de borde abierto
- */
-void Lattice::SetOpenType(bool open_type) {
-  open_type_ = open_type;
 }
 
 

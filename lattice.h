@@ -13,7 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-
+#include "cell.h"
 
 #pragma once
 
@@ -21,16 +21,14 @@ class Cell;
 
 class Lattice {
   public:
-    Lattice(int size_x, int size_y, std::string& border);
+    Lattice(int size_x, int size_y);
     ~Lattice();
-    Cell& GetCell(const Position& position) const;
+    virtual Cell& GetCell(const Position& position) const;
     void SetInitialConfiguration(std::ifstream& initial_file);
     void NextGeneration();
     friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
     friend std::ofstream& operator<<(std::ofstream& os, const Lattice& lattice);
     void SetOpenType(bool open_type);
-  private:
+  protected:
     std::vector<std::vector<Cell*>> lattice_;
-    int border_; // 0: Abierta, 1: Circular
-    bool open_type_; // 0: Fria, 1: Caliente
 };

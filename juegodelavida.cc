@@ -14,6 +14,7 @@
 #include "parameters.cc"
 #include "cell.h"
 #include "lattice.h"
+#include "fronteras.h"
 #include <sstream>
 #include <string>
 
@@ -29,30 +30,40 @@ int main(int argc, char *argv[]) {
   std::cout << "border: " << options.border << std::endl;
   std::cout << "Press any key to continue. Press 'q' to exit. Press 's' to save configuration" << std::endl;
 
-  Lattice lattice(options.size_x, options.size_y, options.border);
-  if (options.initial_file) {
-    lattice.SetInitialConfiguration(options.filename);
-  }
-  std::cout << lattice << std::endl;
+  // Lattice lattice(options.size_x, options.size_y, options.border);
+  // if (options.initial_file) {
+  //   lattice.SetInitialConfiguration(options.filename);
+  // }
+  // std::cout << lattice << std::endl;
 
-  lattice.SetOpenType(options.frio);
+
+  Lattice* lattice;
+  switch(options.border) {
+    case 0:
+      lattice = new Lattice_Open(options.size_x, options.size_y, options.open_type);
+      break;
+  }
+
+  if (options.initial_file) {
+    lattice->SetInitialConfiguration(options.filename);
+  }
 
   bool running = true;
   std::string stop{""};
   while(running) {
     for (int i = 0; i < 5; i++) {
-      lattice.NextGeneration();
-      std::cout << lattice << std::endl;
+      lattice->NextGeneration();
+      std::cout << *lattice << std::endl;
     }
-    lattice.NextGeneration();
-    std::cout << lattice << std::endl;
+    lattice->NextGeneration();
+    std::cout << *lattice << std::endl;
     std::cin >> stop;
     if (stop == "q") running = false;
     else if (stop == "s") {
       std::string file_name;
       std::cin >> file_name;
       std::ofstream output_file{file_name};
-      output_file << lattice;
+      output_file << *lattice;
       output_file.close();
     }
   }

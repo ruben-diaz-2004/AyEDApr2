@@ -17,8 +17,8 @@
 struct parameters {
   int size_x;
   int size_y;
-  std::string border;
-  bool frio = false;
+  int border; // 0: open, 1: periodic, 2: reflective, 3: no border
+  bool open_type = false;
   std::ifstream filename;
   bool initial_file = false;
 };
@@ -32,12 +32,12 @@ parameters parse_args(int argc, char* argv[]) {
       options.size_y = std::stoi(*++it);
     } else if (*it == "-border") {
         if (*++it == "open") {
-          options.border = "open";
-          if (*++it == "0") {
-            options.frio = true;
+          options.border = 0;
+          if (*++it == "1") {
+            options.open_type = true;
           }
         } else if (*it == "periodic") {
-          options.border = "periodic";
+          options.border = 1;
         }
     } else if (*it == "-init") {
       options.filename = std::ifstream(*++it);
