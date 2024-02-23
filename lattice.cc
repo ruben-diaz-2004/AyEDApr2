@@ -28,7 +28,7 @@ Lattice::Lattice(int size_x, int size_y) {
   for (int i{0}; i < size_y; ++i) {
     lattice_[i].resize(size_x);
     for (int j{0}; j < size_x; ++j) {
-      lattice_[i][j] = new Cell(Position(j, i), 0);
+      lattice_[i][j] = new Cell(Position(j, i), State::Muerto);
     }
   }
 }
@@ -95,9 +95,9 @@ void Lattice::SetInitialConfiguration(std::ifstream& initial_file) {
   while (std::getline(initial_file, line)) {
     for (int j = 0; j < line.size(); j++) {
       if (line[j] == '0') {
-        lattice_[i][j]->SetState(0);
+        lattice_[i][j]->SetState(State::Muerto);
       } else if (line[j] == '1') {
-        lattice_[i][j]->SetState(1);
+        lattice_[i][j]->SetState(State::Vivo);
       }
     }
     i++;

@@ -17,19 +17,24 @@
 
 typedef std::pair<int, int> Position;
 
+enum State { 
+  Muerto = 0, 
+  Vivo = 1 
+};
+
 class Lattice;
 
 class Cell {
   public:
-    Cell(const Position position, const char state);
-    int GetState();
-    void SetState(char state);
+    Cell(const Position position, const State state);
+    State& GetState();
+    void SetState(State state);
     void NextState(Lattice& lattice);
     void UpdateState();
     friend std::ostream& operator<<(std::ostream& os, const Cell& cell);
   private:
     Position position_;
-    char state_;
-    char next_state_;
+    State state_;
+    State next_state_;
 };
 

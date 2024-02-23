@@ -25,10 +25,10 @@ Cell& Lattice_Open::GetCell(const Position& position) const {
   
   if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
     if (open_type_ == 0) {
-      Cell* cell = new Cell(Position(-100,-100), 0);
+      Cell* cell = new Cell(Position(-100,-100), State::Muerto);
       return *cell;
     } else if (open_type_ == 1) {
-      Cell* cell = new Cell(Position(-100,-100), 1);
+      Cell* cell = new Cell(Position(-100,-100), State::Vivo);
       return *cell;
     }
   } else return *lattice_[y][x];
