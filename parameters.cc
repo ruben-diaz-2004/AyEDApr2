@@ -38,6 +38,10 @@ parameters parse_args(int argc, char* argv[]) {
           }
         } else if (*it == "periodic") {
           options.border = 1;
+        } else if (*it == "reflective") {
+          options.border = 2;
+        } else if (*it == "no") {
+          options.border = 3;
         }
     } else if (*it == "-init") {
       options.filename = std::ifstream(*++it);

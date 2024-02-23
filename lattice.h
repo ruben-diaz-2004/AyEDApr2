@@ -26,9 +26,9 @@ class Lattice {
     virtual Cell& GetCell(const Position& position) const;
     void SetInitialConfiguration(std::ifstream& initial_file);
     void NextGeneration();
+    std::size_t Population() const;
     friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
     friend std::ofstream& operator<<(std::ofstream& os, const Lattice& lattice);
-    void SetOpenType(bool open_type);
   protected:
     std::vector<std::vector<Cell*>> lattice_;
 };

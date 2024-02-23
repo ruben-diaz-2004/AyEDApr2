@@ -34,6 +34,7 @@ class Lattice_Periodic : public Lattice {
 
 class Lattice_Reflective : public Lattice {
   public:
+    Lattice_Reflective(int size_x, int size_y) : Lattice(size_x, size_y) {};
     Cell& GetCell(const Position& position) const;
 };
 

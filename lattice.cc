@@ -74,6 +74,17 @@ void Lattice::NextGeneration() {
 
 
 
+std::size_t Lattice::Population() const {
+  std::size_t population = 0;
+  for (int i = 0; i < lattice_.size(); i++) {
+    for (int j = 0; j < lattice_[i].size(); j++) {
+      population += lattice_[i][j]->GetState();
+    }
+  }
+  return population;
+} 
+
+
 /**
  * Establece la configuración inicial del retículo
  * @param initial_file Archivo con la configuración inicial

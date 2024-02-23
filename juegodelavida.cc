@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
 
   std::cout << "size: " << options.size_x << " * " << options.size_y << std::endl;
   std::cout << "border: " << options.border << std::endl;
-  std::cout << "Press any key to continue. Press 'q' to exit. Press 's' to save configuration" << std::endl;
+  std::cout << "Options menu:" << std::endl << "'x' to exit.\n's' to save configuration.\n'n' to show next generation.\n";
+  std::cout << "'L' to show next 5 generations.\n'c' to show population.\n";
 
   // Lattice lattice(options.size_x, options.size_y, options.border);
   // if (options.initial_file) {
@@ -42,6 +43,9 @@ int main(int argc, char *argv[]) {
     case 0:
       lattice = new Lattice_Open(options.size_x, options.size_y, options.open_type);
       break;
+    case 2:
+      lattice = new Lattice_Reflective(options.size_x, options.size_y);
+      break;
   }
 
   if (options.initial_file) {
@@ -49,22 +53,33 @@ int main(int argc, char *argv[]) {
   }
 
   bool running = true;
-  std::string stop{""};
+  char stop;
   while(running) {
-    for (int i = 0; i < 5; i++) {
-      lattice->NextGeneration();
-      std::cout << *lattice << std::endl;
-    }
-    lattice->NextGeneration();
-    std::cout << *lattice << std::endl;
     std::cin >> stop;
-    if (stop == "q") running = false;
-    else if (stop == "s") {
-      std::string file_name;
-      std::cin >> file_name;
-      std::ofstream output_file{file_name};
-      output_file << *lattice;
-      output_file.close();
+    switch (stop) {
+      case 'x':
+        running = false;
+        break;
+      case 'n': // Calcula y muestra la siguiente generación
+        lattice->NextGeneration();
+        std::cout << *lattice << std::endl;
+        break;
+      case 'L': // Calcula y muestra las siguientes 5 generaciones
+        for (int i = 0; i < 5; i++) {
+          lattice->NextGeneration();
+          std::cout << *lattice << std::endl;
+        }
+        break;
+      case 'c': // Se muestra la población (número de células vivas) actual
+        std::cout << lattice->Population() << std::endl;
+        break;
+      case 's': // Guarda la configuración actual en un fichero
+        std::string file_name;
+        std::cin >> file_name;
+        std::ofstream output_file{file_name};
+        output_file << *lattice;
+        output_file.close();
+        break;
     }
   }
 
