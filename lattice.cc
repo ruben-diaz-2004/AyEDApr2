@@ -33,6 +33,32 @@ Lattice::Lattice(int size_x, int size_y) {
 }
 
 
+Lattice::Lattice(std::ifstream& input_file) {
+  std::string line;
+  int size_x = 0;
+  int size_y = 0;
+  while (std::getline(input_file, line)) {
+    size_x = line.size();
+    size_y++;
+  }
+
+  input_file.clear();
+  input_file.seekg(0, std::ios::beg); // Actualiza el puntero del archivo al principio
+
+  lattice_.resize(size_y);
+  lattice_.SetPositiveIndex(size_y);
+
+  for (int i{0}; i < size_y; ++i) {
+    lattice_[i].resize(size_x);
+    lattice_[i].SetPositiveIndex(size_x);
+    for (int j{0}; j < size_x; ++j) {
+      lattice_[i][j] = new Cell(Position(j, i), State::Muerto);
+    }
+  }
+  SetInitialConfiguration(input_file);
+}
+
+
 /**
  * Destructor de la clase Lattice
  */

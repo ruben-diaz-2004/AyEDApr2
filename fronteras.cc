@@ -17,6 +17,11 @@
 
 Lattice_Open::Lattice_Open(int size_x, int size_y, bool open_type) : Lattice(size_x, size_y) {
   open_type_ = open_type;
+  if (open_type == 0) {
+    cell_ = new Cell(Position(-100,-100), State::Muerto);
+  } else if (open_type == 1) {
+    cell_ = new Cell(Position(-100,-100), State::Vivo);
+  }
 }
 
 Cell& Lattice_Open::GetCell(const Position& position) const {
@@ -24,13 +29,12 @@ Cell& Lattice_Open::GetCell(const Position& position) const {
   int y = position.second;
   
   if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
-    if (open_type_ == 0) {
-      Cell* cell = new Cell(Position(-100,-100), State::Muerto);
-      return *cell;
-    } else if (open_type_ == 1) {
-      Cell* cell = new Cell(Position(-100,-100), State::Vivo);
-      return *cell;
-    }
+    // if (open_type_ == 0) {
+    // } else if (open_type_ == 1) {
+    //   Cell* cell = new Cell(Position(-100,-100), State::Vivo);
+    //   return *cell;
+    // }
+    return *cell_;
   } else return *lattice_[y][x];
 }
 
@@ -84,11 +88,14 @@ Cell& Lattice_Reflective::GetCell(const Position& position) const {
 Cell& Lattice_NoBorder::GetCell(const Position& position) const {
   int x = position.first;
   int y = position.second;
+  // if ( x < lattice_[0].negative_index() || y < lattice_.negative_index() || x > lattice_[0].positive_index()-1 || y > lattice_.positive_index()-1) {
+  //   return *lattice_[0][0];
+  // } else
+  // return *lattice_[y][x];
   if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
     Cell* cell = new Cell(Position(-100,-100), State::Muerto);
     return *cell;
-  } else
-  return *lattice_[y][x];
+  } else return *lattice_[y][x];
 }
 
 
@@ -156,7 +163,7 @@ void Lattice_NoBorder::IncrementSize(char direction) {
     case 'N':
       new_row.resize(lattice_[0].size());
       for (int i = 0; i < lattice_[0].size(); i++) {
-        new_row[i] = new Cell(Position(lattice_.negative_index(), i), State::Muerto);
+        new_row[i] = new Cell(Position(i, lattice_.negative_index()), State::Muerto);
       }
       lattice_.push_front(new_row);
       lattice_.DecrementNegativeIndex();
@@ -164,7 +171,7 @@ void Lattice_NoBorder::IncrementSize(char direction) {
     case 'S':
       new_row.resize(lattice_[0].size());
       for (int i = 0; i < lattice_[0].size(); i++) {
-        new_row[i] = new Cell(Position(lattice_.positive_index(), i), State::Muerto);
+        new_row[i] = new Cell(Position(i, lattice_.positive_index()), State::Muerto);
       }
       lattice_.push_back(new_row);
       lattice_.IncrementPositiveIndex();

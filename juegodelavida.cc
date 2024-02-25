@@ -42,13 +42,25 @@ int main(int argc, char *argv[]) {
   Lattice* lattice;
   switch(options.border) {
     case 0:
-      lattice = new Lattice_Open(options.size_x, options.size_y, options.open_type);
+      if (options.initial_file) {
+        lattice = new Lattice_Open(options.filename, options.open_type);
+      } else {
+        lattice = new Lattice_Open(options.size_x, options.size_y, options.open_type);
+      }
       break;
     case 2:
-      lattice = new Lattice_Reflective(options.size_x, options.size_y);
+      if (options.initial_file) {
+        lattice = new Lattice_Reflective(options.filename);
+      } else {
+        lattice = new Lattice_Reflective(options.size_x, options.size_y);
+      }
       break;
     case 3:
-      lattice = new Lattice_NoBorder(options.size_x, options.size_y);
+      if (options.initial_file) {
+        lattice = new Lattice_NoBorder(options.filename);
+      } else {
+        lattice = new Lattice_NoBorder(options.size_x, options.size_y);
+      }
       break;
   }
 

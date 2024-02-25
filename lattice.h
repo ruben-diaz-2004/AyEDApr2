@@ -23,6 +23,7 @@ class Cell;
 class Lattice {
   public:
     Lattice(int size_x, int size_y);
+    Lattice(std::ifstream& initial_file);
     ~Lattice();
     virtual Cell& GetCell(const Position& position) const;
     void SetInitialConfiguration(std::ifstream& initial_file);
