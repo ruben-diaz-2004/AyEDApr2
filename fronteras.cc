@@ -88,10 +88,11 @@ Cell& Lattice_Reflective::GetCell(const Position& position) const {
 Cell& Lattice_NoBorder::GetCell(const Position& position) const {
   int x = position.first;
   int y = position.second;
-  // if ( x < lattice_[0].negative_index() || y < lattice_.negative_index() || x > lattice_[0].positive_index()-1 || y > lattice_.positive_index()-1) {
+  // if ( x < lattice_[0].negative_index() || y < lattice_.negative_index() || x > lattice_[0].positive_index() || y > lattice_.positive_index()) {
   //   return *lattice_[0][0];
   // } else
   // return *lattice_[y][x];
+
   if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
     Cell* cell = new Cell(Position(-100,-100), State::Muerto);
     return *cell;

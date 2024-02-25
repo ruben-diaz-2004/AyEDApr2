@@ -52,21 +52,21 @@ void Cell::NextState(Lattice& reticulo) {
   State next_state;
 
   const State C = state_;
-  State E = reticulo.GetCell(Position(position_.first-1, position_.second)).GetState();
+  State E = reticulo.GetCell(Position(position_.first+1, position_.second)).GetState();
   if (E == State::Vivo) alive_count++;
-  State W = reticulo.GetCell(Position(position_.first+1, position_.second)).GetState();
+  State W = reticulo.GetCell(Position(position_.first-1, position_.second)).GetState();
   if (W == State::Vivo) alive_count++;
   State N = reticulo.GetCell(Position(position_.first, position_.second-1)).GetState();
   if (N == State::Vivo) alive_count++;
   State S = reticulo.GetCell(Position(position_.first, position_.second+1)).GetState();
   if (S == State::Vivo) alive_count++;
-  State NE = reticulo.GetCell(Position(position_.first-1, position_.second-1)).GetState();
+  State NE = reticulo.GetCell(Position(position_.first+1, position_.second-1)).GetState();
   if (NE == State::Vivo) alive_count++;
-  State NW = reticulo.GetCell(Position(position_.first+1, position_.second-1)).GetState();
+  State NW = reticulo.GetCell(Position(position_.first-1, position_.second-1)).GetState();
   if (NW == State::Vivo) alive_count++;
-  State SE = reticulo.GetCell(Position(position_.first-1, position_.second+1)).GetState();
+  State SE = reticulo.GetCell(Position(position_.first+1, position_.second+1)).GetState();
   if (SE == State::Vivo) alive_count++;
-  State SW = reticulo.GetCell(Position(position_.first+1, position_.second+1)).GetState();
+  State SW = reticulo.GetCell(Position(position_.first-1, position_.second+1)).GetState();
   if (SW == State::Vivo) alive_count++;
 
   if (C == State::Muerto) {
