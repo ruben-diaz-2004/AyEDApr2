@@ -52,7 +52,6 @@ void Cell::NextState(Lattice& reticulo) {
   State next_state;
 
   const State C = state_;
-  if (C == State::Vivo) alive_count++;
   State E = reticulo.GetCell(Position(position_.first-1, position_.second)).GetState();
   if (E == State::Vivo) alive_count++;
   State W = reticulo.GetCell(Position(position_.first+1, position_.second)).GetState();
@@ -104,7 +103,7 @@ void Cell::UpdateState() {
 */
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
   if (cell.state_ == 0) {
-    os << " ";
+    os << "-";
   } else {
     os << "X";
   }

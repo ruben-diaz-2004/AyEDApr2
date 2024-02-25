@@ -14,7 +14,7 @@
 
 #include "cell.h"
 #include "lattice.h"
-
+#include "my_vector.h"
 
 
 /**
@@ -28,8 +28,7 @@ Lattice::Lattice(int size_x, int size_y) {
   for (int i{0}; i < size_y; ++i) {
     lattice_[i].resize(size_x);
     for (int j{0}; j < size_x; ++j) {
-      lattice_[i][j] = new Cell(Position(j, i), State::Muerto);
-    }
+      lattice_[i][j] = new Cell(Position(j, i), State::Muerto);    }
   }
 }
 
@@ -71,7 +70,6 @@ void Lattice::NextGeneration() {
     }
   }
 }
-
 
 
 std::size_t Lattice::Population() const {

@@ -14,7 +14,7 @@ CXXFLAGS = -Wall -std=c++17 -g
 
 all: CellularAutomaton
 
-CellularAutomaton: CellularAutomaton.cc cell.cc lattice.cc
+CellularAutomaton: CellularAutomaton.cc cell.cc lattice.cc fronteras.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 

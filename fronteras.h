@@ -40,7 +40,11 @@ class Lattice_Reflective : public Lattice {
 
 class Lattice_NoBorder : public Lattice {
   public:
+    Lattice_NoBorder(int size_x, int size_y) : Lattice(size_x, size_y) {};
     Cell& GetCell(const Position& position) const;
+    void NextGeneration();
+    void CheckBorder();
+    void IncrementSize(char direction);
 };  
 
 

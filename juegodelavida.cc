@@ -15,6 +15,7 @@
 #include "cell.h"
 #include "lattice.h"
 #include "fronteras.h"
+#include "my_vector.h"
 #include <sstream>
 #include <string>
 
@@ -46,12 +47,16 @@ int main(int argc, char *argv[]) {
     case 2:
       lattice = new Lattice_Reflective(options.size_x, options.size_y);
       break;
+    case 3:
+      lattice = new Lattice_NoBorder(options.size_x, options.size_y);
+      break;
   }
 
   if (options.initial_file) {
     lattice->SetInitialConfiguration(options.filename);
   }
 
+  std::cout << *lattice << std::endl;
   bool running = true;
   char stop;
   while(running) {

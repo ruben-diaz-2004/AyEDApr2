@@ -14,6 +14,7 @@
 #include <vector>
 #include <fstream>
 #include "cell.h"
+#include "my_vector.h"
 
 #pragma once
 
@@ -25,10 +26,11 @@ class Lattice {
     ~Lattice();
     virtual Cell& GetCell(const Position& position) const;
     void SetInitialConfiguration(std::ifstream& initial_file);
-    void NextGeneration();
+    virtual void NextGeneration();
     std::size_t Population() const;
     friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
     friend std::ofstream& operator<<(std::ofstream& os, const Lattice& lattice);
   protected:
-    std::vector<std::vector<Cell*>> lattice_;
+    // std::vector<std::vector<Cell*>> lattice_;
+    my_vector<my_vector<Cell*>> lattice_;
 };
