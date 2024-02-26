@@ -6,7 +6,7 @@
   *
   * @author Rubén Díaz Marrero 
   * @date 19/02/2024
-  * @brief Este programa simula el comportamiento de un autómata celular
+  * @brief Juego de la vida
   */
 
 #include <iostream>
@@ -33,6 +33,11 @@ Lattice::Lattice(int size_x, int size_y) {
 }
 
 
+/**
+ * Constructor de la clase Lattice
+ * @param input_file Archivo con la configuración inicial
+ 
+ */
 Lattice::Lattice(std::ifstream& input_file) {
   std::string line;
   int size_x = 0;
@@ -96,6 +101,10 @@ void Lattice::NextGeneration() {
 }
 
 
+/**
+ * Calcula la población del retículo
+ * @return Población del retículo
+ */
 std::size_t Lattice::Population() const {
   std::size_t population = 0;
   for (int i = 0; i < lattice_.size(); i++) {

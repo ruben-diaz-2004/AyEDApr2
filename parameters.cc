@@ -6,7 +6,7 @@
   *
   * @author Rubén Díaz Marrero 
   * @date 19/02/2024
-  * @brief Este programa simula el comportamiento de un autómata celular
+  * @brief Juego de la vida
   */
  
 #include <iostream>
