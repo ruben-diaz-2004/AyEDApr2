@@ -88,15 +88,16 @@ Cell& Lattice_Reflective::GetCell(const Position& position) const {
 Cell& Lattice_NoBorder::GetCell(const Position& position) const {
   int x = position.first;
   int y = position.second;
-  // if ( x < lattice_[0].negative_index() || y < lattice_.negative_index() || x > lattice_[0].positive_index() || y > lattice_.positive_index()) {
-  //   return *lattice_[0][0];
-  // } else
-  // return *lattice_[y][x];
-
-  if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
-    Cell* cell = new Cell(Position(-100,-100), State::Muerto);
-    return *cell;
+  if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 || x > lattice_[0].positive_index()-1 || y > lattice_.positive_index()-1) {
+    return *lattice_[0][0];
   } else return *lattice_[y][x];
+  // Problemas cuando y es negativo o x es negativo
+
+  
+  // if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
+  //   Cell* cell = new Cell(Position(-100,-100), State::Muerto);
+  //   return *cell;
+  // } else return *lattice_[y][x];
 }
 
 
@@ -163,6 +164,7 @@ void Lattice_NoBorder::IncrementSize(char direction) {
       break;
     case 'N':
       new_row.resize(lattice_[0].size());
+      new_row.SetPositiveIndex(lattice_[0].positive_index());
       for (int i = 0; i < lattice_[0].size(); i++) {
         new_row[i] = new Cell(Position(i, lattice_.negative_index()), State::Muerto);
       }
@@ -171,6 +173,7 @@ void Lattice_NoBorder::IncrementSize(char direction) {
       break;
     case 'S':
       new_row.resize(lattice_[0].size());
+      new_row.SetPositiveIndex(lattice_[0].positive_index());
       for (int i = 0; i < lattice_[0].size(); i++) {
         new_row[i] = new Cell(Position(i, lattice_.positive_index()), State::Muerto);
       }

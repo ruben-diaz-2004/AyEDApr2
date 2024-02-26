@@ -8,13 +8,13 @@
 # 
 
 CXX = g++
-CXXFLAGS = -Wall -std=c++17 -g 
+CXXFLAGS = -std=c++17 -g 
 
 
 
 all: CellularAutomaton
 
-CellularAutomaton: CellularAutomaton.cc cell.cc lattice.cc fronteras.cc
+CellularAutomaton: juegodelavida.cc cell.cc lattice.cc fronteras.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 
