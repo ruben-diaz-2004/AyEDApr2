@@ -90,7 +90,7 @@ Cell& Lattice_NoBorder::GetCell(const Position& position) const {
   int y = position.second;
   if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 || x > lattice_[0].positive_index()-1 || y > lattice_.positive_index()-1) {
     return *lattice_[0][0];
-  } else return *lattice_[y][x];
+  } else return *lattice_[y-(lattice_.negative_index()+1)][x+(-(lattice_[0].negative_index()+1))];
   // Problemas cuando y es negativo o x es negativo
 
   
