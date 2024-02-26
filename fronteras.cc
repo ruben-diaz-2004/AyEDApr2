@@ -88,7 +88,7 @@ Cell& Lattice_Reflective::GetCell(const Position& position) const {
 Cell& Lattice_NoBorder::GetCell(const Position& position) const {
   int x = position.first;
   int y = position.second;
-  if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 || x > lattice_[0].positive_index()-1 || y > lattice_.positive_index()-1) {
+  if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 || x > lattice_[0].size()-(-(lattice_[0].negative_index())) || y > lattice_.size()-(-(lattice_.negative_index()))) {
     return *lattice_[0][0];
   } else return *lattice_[y-(lattice_.negative_index()+1)][x+(-(lattice_[0].negative_index()+1))];
   // Problemas cuando y es negativo o x es negativo
@@ -116,6 +116,8 @@ void Lattice_NoBorder::NextGeneration() {
       lattice_[i][j]->UpdateState();
     }
   }
+
+  CheckBorder();
 }
 
 
@@ -152,33 +154,29 @@ void Lattice_NoBorder::IncrementSize(char direction) {
   switch (direction) {
     case 'E':
       for (int i = 0; i < lattice_.size(); i++) {
-        lattice_[i].push_back(new Cell(Position(lattice_[i].positive_index(), i), State::Muerto));
-        lattice_[i].IncrementPositiveIndex();
+        lattice_[i].push_back(new Cell(Position(lattice_[i].size()-(-(lattice_[i].negative_index()+1)), i+(lattice_.negative_index()+1)), State::Muerto));
       }
       break;
     case 'W':
       for (int i = 0; i < lattice_.size(); i++) {
-        lattice_[i].push_front(new Cell(Position(lattice_[i].negative_index(), i), State::Muerto));
+        lattice_[i].push_front(new Cell(Position(lattice_[i].negative_index(), i+(lattice_.negative_index()+1)), State::Muerto));
         lattice_[i].DecrementNegativeIndex();
       }
       break;
     case 'N':
       new_row.resize(lattice_[0].size());
-      new_row.SetPositiveIndex(lattice_[0].positive_index());
       for (int i = 0; i < lattice_[0].size(); i++) {
-        new_row[i] = new Cell(Position(i, lattice_.negative_index()), State::Muerto);
+        new_row[i] = new Cell(Position(i+(lattice_[0].negative_index()+1), lattice_.negative_index()), State::Muerto);
       }
       lattice_.push_front(new_row);
       lattice_.DecrementNegativeIndex();
       break;
     case 'S':
       new_row.resize(lattice_[0].size());
-      new_row.SetPositiveIndex(lattice_[0].positive_index());
       for (int i = 0; i < lattice_[0].size(); i++) {
-        new_row[i] = new Cell(Position(i, lattice_.positive_index()), State::Muerto);
+        new_row[i] = new Cell(Position(i+(lattice_[0].negative_index()+1), (lattice_.size()-(-(lattice_.negative_index()+1)))), State::Muerto);
       }
       lattice_.push_back(new_row);
-      lattice_.IncrementPositiveIndex();
       break;
   }
 }

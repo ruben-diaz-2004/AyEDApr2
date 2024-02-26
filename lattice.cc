@@ -46,11 +46,9 @@ Lattice::Lattice(std::ifstream& input_file) {
   input_file.seekg(0, std::ios::beg); // Actualiza el puntero del archivo al principio
 
   lattice_.resize(size_y);
-  lattice_.SetPositiveIndex(size_y);
 
   for (int i{0}; i < size_y; ++i) {
     lattice_[i].resize(size_x);
-    lattice_[i].SetPositiveIndex(size_x);
     for (int j{0}; j < size_x; ++j) {
       lattice_[i][j] = new Cell(Position(j, i), State::Muerto);
     }

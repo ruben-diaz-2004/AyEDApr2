@@ -26,13 +26,9 @@ class my_vector {
     const T& operator[](std::size_t index) const { return my_vector_[index]; }
     void resize(std::size_t size) { 
       my_vector_.resize(size); 
-      positive_index_ = size-1;
     }
-    int positive_index() const { return positive_index_; }
     int negative_index() const { return negative_index_; }
-    void IncrementPositiveIndex() { positive_index_++; }
     void DecrementNegativeIndex() { negative_index_--; }
-    void SetPositiveIndex(int index) { positive_index_ = index; }
     void clear() { my_vector_.clear(); }
     std::size_t size() const { return my_vector_.size(); }
     void push_back(const T& value) { my_vector_.push_back(value); }
@@ -40,6 +36,5 @@ class my_vector {
     
   private:
     std::vector<T> my_vector_;
-    int positive_index_;
     int negative_index_{-1};
 };
