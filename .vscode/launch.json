@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/CellularAutomaton",
-            "args": ["-border", "no", "-init", "prueba.txt"],
+            "args": ["-border", "no", "-init", "prueba2.txt"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

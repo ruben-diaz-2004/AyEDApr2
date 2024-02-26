@@ -88,16 +88,20 @@ Cell& Lattice_Reflective::GetCell(const Position& position) const {
 Cell& Lattice_NoBorder::GetCell(const Position& position) const {
   int x = position.first;
   int y = position.second;
-  if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 || x > lattice_[0].size()-(-(lattice_[0].negative_index())) || y > lattice_.size()-(-(lattice_.negative_index()))) {
-    return *lattice_[0][0];
-  } else return *lattice_[y-(lattice_.negative_index()+1)][x+(-(lattice_[0].negative_index()+1))];
-  // Problemas cuando y es negativo o x es negativo
+  // if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 || x > lattice_[0].size()-(-(lattice_[0].negative_index())) || y > lattice_.size()-(-(lattice_.negative_index()))) {
+  //   return *lattice_[0][0];
+  // } else return *lattice_[y-(lattice_.negative_index()+1)][x+(-(lattice_[0].negative_index()+1))];
 
-  
-  // if ( x < 0 || y < 0 || x > lattice_[0].size()-1 || y > lattice_.size()-1) {
-  //   Cell* cell = new Cell(Position(-100,-100), State::Muerto);
-  //   return *cell;
-  // } else return *lattice_[y][x];
+  if ( x < lattice_[0].negative_index()+1 || y < lattice_.negative_index()+1 ) {
+    return *lattice_[0][0];
+  }
+  if ( x > (lattice_[0].size()+lattice_[0].negative_index()) && x >= 0) {
+    return *lattice_[0][0];
+  } 
+  if ( y > (lattice_.size()+lattice_.negative_index()) && y >= 0) {
+    return *lattice_[0][0];
+  }
+  return *lattice_[y-(lattice_.negative_index()+1)][x+(-(lattice_[0].negative_index()+1))];
 }
 
 
@@ -165,6 +169,7 @@ void Lattice_NoBorder::IncrementSize(char direction) {
       break;
     case 'N':
       new_row.resize(lattice_[0].size());
+      new_row.SetNegativeIndex(lattice_[0].negative_index());
       for (int i = 0; i < lattice_[0].size(); i++) {
         new_row[i] = new Cell(Position(i+(lattice_[0].negative_index()+1), lattice_.negative_index()), State::Muerto);
       }
@@ -173,6 +178,7 @@ void Lattice_NoBorder::IncrementSize(char direction) {
       break;
     case 'S':
       new_row.resize(lattice_[0].size());
+      new_row.SetNegativeIndex(lattice_[0].negative_index());
       for (int i = 0; i < lattice_[0].size(); i++) {
         new_row[i] = new Cell(Position(i+(lattice_[0].negative_index()+1), (lattice_.size()-(-(lattice_.negative_index()+1)))), State::Muerto);
       }

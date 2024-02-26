@@ -28,6 +28,7 @@ class my_vector {
       my_vector_.resize(size); 
     }
     int negative_index() const { return negative_index_; }
+    void SetNegativeIndex(int negative_index) { negative_index_ = negative_index; }
     void DecrementNegativeIndex() { negative_index_--; }
     void clear() { my_vector_.clear(); }
     std::size_t size() const { return my_vector_.size(); }
