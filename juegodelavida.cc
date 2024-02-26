@@ -69,6 +69,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::cout << *lattice << std::endl;
+  bool population = false;
   bool running = true;
   char stop;
   while(running) {
@@ -79,16 +80,24 @@ int main(int argc, char *argv[]) {
         break;
       case 'n': // Calcula y muestra la siguiente generación
         lattice->NextGeneration();
-        std::cout << *lattice << std::endl;
+        if (population) {
+          std::cout << lattice->Population() << std::endl;
+        } else {
+            std::cout << *lattice << std::endl;
+          }
         break;
       case 'L': // Calcula y muestra las siguientes 5 generaciones
         for (int i = 0; i < 5; i++) {
           lattice->NextGeneration();
-          std::cout << *lattice << std::endl;
+          if (population) {
+            std::cout << lattice->Population() << std::endl;
+          } else {
+              std::cout << *lattice << std::endl;
+            }
         }
         break;
       case 'c': // Se muestra la población (número de células vivas) actual
-        std::cout << lattice->Population() << std::endl;
+        population = (population) ? false : true;
         break;
       case 's': // Guarda la configuración actual en un fichero
         std::string file_name;
